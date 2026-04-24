@@ -74,6 +74,7 @@ Demostración de que la infraestructura está activa y los puertos están correc
 Prueba técnica que muestra cómo el Proxy Inverso alterna entre los dos backends.
 > **Comando:** `curl -I http://localhost` (repetido)
 > ![Prueba Balanceo]![alt text](image-1.png)
+> [alt text](image-1.2.png)
 
 ### 3. Vista de la Interfaz Web
 > ![Interfaz Web]![alt text](image-2.png)
