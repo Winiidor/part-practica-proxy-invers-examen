@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infrastructure Deployment - Load Balanced</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="images/logo.png" alt="Logo del Proyecto" class="logo">
+            <h1>Estado de la Infraestructura Web</h1>
+            <p class="subtitle">Demostración de Proxy Inverso y Balanceo de Carga</p>
+        </header>
+
+        <main>
+            <section class="status-card">
+                <h2>Información del Backend</h2>
+                <p>Esta solicitud fue gestionada por:</p>
+                <div id="backend-id" class="badge">Detectando...</div>
+                <p class="description">
+                    El Proxy Inverso Nginx está distribuyendo el tráfico entre dos servidores backend idénticos.
+                    Cada respuesta incluye una cabecera personalizada <code>X-Backend-Server</code> para identificar el origen.
+                </p>
+            </section>
+
+            <section class="multimedia">
+                <h2>Galería Multimedia</h2>
+                <div class="video-container">
+                    <video controls poster="images/logo.png">
+                        <source src="media/intro.mp4" type="video/mp4">
+                        Tu navegador no soporta el elemento de vídeo.
+                    </video>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Simple script to show which backend served the page by checking headers
+        // Note: In a real scenario, the proxy adds headers. We can't see them via JS easily
+        // unless we do a fetch, but for this demo, we'll assume the proxy might inject 
+        // a small script or we can just leave it as a placeholder.
+        // For the sake of the exercise, I will make Nginx inject a header and I'll use a fetch to self to show it.
+        fetch(window.location.href)
+            .then(response => {
+                const backend = response.headers.get('X-Backend-Server');
+                if (backend) {
+                    document.getElementById('backend-id').textContent = backend;
+                } else {
+                    document.getElementById('backend-id').textContent = "Backend A / B (Check Headers)";
+                }
+            })
+            .catch(err => {
+                document.getElementById('backend-id').textContent = "Error detecting backend";
+            });
+    </script>
+</body>
+</html>
