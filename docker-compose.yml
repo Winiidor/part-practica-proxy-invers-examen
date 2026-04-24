@@ -1,0 +1,37 @@
+services:
+  proxy:
+    image: nginx:latest
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - web1
+      - web2
+    networks:
+      - internal_net
+    restart: always
+
+  web1:
+    image: nginx:latest
+    container_name: web-backend-1
+    volumes:
+      - ./www:/usr/share/nginx/html:ro
+    networks:
+      - internal_net
+    # No ports exposed to host
+
+  web2:
+    image: nginx:latest
+    container_name: web-backend-2
+    volumes:
+      - ./www:/usr/share/nginx/html:ro
+    networks:
+      - internal_net
+    # No ports exposed to host
+
+networks:
+  internal_net:
+    driver: bridge
+    name: proxy_network
